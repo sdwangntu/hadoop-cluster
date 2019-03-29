@@ -46,8 +46,7 @@ RUN \
     echo "export HDFS_NAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_SECONDARYNAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export YARN_RESOURCEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/yarn-env.sh && \
-    echo "export YARN_NODEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/yarn-env.sh && \
-    echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin" >> ~/.bashrc
+    echo "export YARN_NODEMANAGER_USER=root" >> $HADOOP_HOME/etc/hadoop/yarn-env.sh 
 
 RUN chmod +x  $HADOOP_HOME/etc/hadoop/hadoop-env.sh
 ####################################################################################
@@ -81,7 +80,7 @@ ADD ssh_config /root/.ssh/config
 ADD hue.ini /opt/hue/desktop/conf
 
 ADD start-hadoop.sh start-hadoop.sh
-ADD workers  $HADOOP_HOME/etc/hadoop/workers
+#ADD workers  $HADOOP_HOME/etc/hadoop/workers
 EXPOSE 8088 9870 9864 19888 8042 8888
 #****** HBASE installation
 ADD hbase-1.4.9-bin.tar.gz /
@@ -89,13 +88,14 @@ ENV HBASE_HOME /opt/hbase
 
 RUN \
     mv hbase-1.4.9 $HBASE_HOME && \
-    echo "export JAVA_HOME=$JAVA_HOME" >> $HBASE_HOME/conf/hbase-env.sh 
+    echo "export JAVA_HOME=$JAVA_HOME" >> $HBASE_HOME/conf/hbase-env.sh && \
+    echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin" >> ~/.bashrc
+
 ADD hbase-site.xml $HBASE_HOME/conf/hbase-site.xml
-#RUN echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin" >> ~/.bashrc
 # Master info port
-EXPOSE 16000 16010
+EXPOSE 2181 16000 16010
 #******
-RUN chmod +x  $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+RUN chmod +x  $HBASE_HOME/conf/hbase-env.sh
 
 
 CMD ["bash","/start-hadoop.sh"]

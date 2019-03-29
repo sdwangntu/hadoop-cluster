@@ -3,7 +3,7 @@
   -->
   <property >
     <name>hbase.tmp.dir</name>
-    <value>${java.io.tmpdir}/hbase-${user.name}</value>
+    <value>/opt/hbase/tmp</value>
     <description>Temporary directory on the local filesystem.
     Change this setting to point to a location more permanent
     than '/tmp', the usual resolve for java.io.tmpdir, as the
@@ -22,6 +22,13 @@
     so change this configuration or else all data will be lost on
     machine restart.</description>
   </property>
+  <property>
+    <name>hbase.zookeeper.property.dataDir</name>
+    <value>/opt/hbase/zookeeper_data</value>
+    <description>Property from ZooKeeper config zoo.cfg.
+    The directory where the snapshot is stored.
+    </description>
+  </property>
   <property >
     <name>hbase.cluster.distributed</name>
     <value>true</value>
@@ -32,7 +39,7 @@
   </property>
   <property>
     <name>hbase.zookeeper.quorum</name>
-    <value>localhost</value>
+    <value>hadoop-master</value>
     <description>Comma separated list of servers in the ZooKeeper ensemble
     (This config. should have been named hbase.zookeeper.ensemble).
     For example, "host1.mydomain.com,host2.mydomain.com,host3.mydomain.com".

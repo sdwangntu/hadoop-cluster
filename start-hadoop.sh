@@ -13,7 +13,7 @@ HBASE_HOME=/opt/hbase
 #export HADOOP_MAPRED_HOME=$HADOOP_HOME
 #export HADOOP_YARN_HOME=$HADOOP_HOME
 
-#service ssh start
+service ssh start
 if [ "$HOSTNAME" = "hadoop-master" ] || [ "$1" = "all" ]
 then
   $HADOOP_PREFIX/bin/hdfs namenode -format
@@ -22,12 +22,15 @@ then
   $HADOOP_PREFIX/bin/yarn --daemon start resourcemanager 
   $HADOOP_PREFIX/bin/yarn --daemon start nodemanager 
   $HADOOP_PREFIX/bin/mapred --daemon start historyserver
-  $HBASE_HOME/bin/hbase master start
-  $HBASE_HOME/bin/hbase regionserver start
+  $HBASE_HOME/bin/hbase-daemons.sh start zookeeper
+  $HBASE_HOME/bin/hbase-daemon.sh start master
+  $HBASE_HOME/bin/hbase-daemons.sh start regionserver
 else
   $HADOOP_PREFIX/bin/hdfs --daemon start datanode
   $HADOOP_PREFIX/bin/yarn --daemon start nodemanager 
   $HBASE_HOME/bin/hbase regionserver start
+  $HBASE_HOME/bin/hbase-daemons.sh start regionserver
+#  $HBASE_HOME/bin/hbase-daemons.sh start master-backup
 fi
 while true; do sleep 1000; done
 # test parameter 1000 -> 1000000
