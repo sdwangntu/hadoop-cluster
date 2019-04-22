@@ -42,6 +42,7 @@ RUN \
     done && \
     echo "export JAVA_HOME=$JAVA_HOME" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_DATANODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
+    echo "export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
 #    echo "export HDFS_DATANODE_SECURE_USER=hdfs" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_NAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
     echo "export HDFS_SECONDARYNAMENODE_USER=root" >> $HADOOP_HOME/etc/hadoop/hadoop-env.sh && \
@@ -79,7 +80,6 @@ ADD ssh_config /root/.ssh/config
 
 ADD hue.ini /opt/hue/desktop/conf
 
-ADD start-hadoop.sh start-hadoop.sh
 #ADD workers  $HADOOP_HOME/etc/hadoop/workers
 EXPOSE 8088 9870 9864 19888 8042 8888
 #****** HBASE installation
@@ -88,14 +88,45 @@ ENV HBASE_HOME /opt/hbase
 
 RUN \
     mv hbase-1.4.9 $HBASE_HOME && \
-    echo "export JAVA_HOME=$JAVA_HOME" >> $HBASE_HOME/conf/hbase-env.sh && \
-    echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin" >> ~/.bashrc
+    echo "export JAVA_HOME=$JAVA_HOME" >> $HBASE_HOME/conf/hbase-env.sh 
+#    echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin" >> ~/.bashrc
 
 ADD hbase-site.xml $HBASE_HOME/conf/hbase-site.xml
 # Master info port
 EXPOSE 2181 16000 16010
 #******
-RUN chmod +x  $HBASE_HOME/conf/hbase-env.sh
+#***spark***
+ADD spark-2.4.1-bin-hadoop2.7.tgz /
+ENV SPARK_HOME /opt/spark
 
+RUN mv spark-2.4.1-bin-hadoop2.7 $SPARK_HOME
 
-CMD ["bash","/start-hadoop.sh"]
+ADD spark-env.sh $SPARK_HOME/conf/spark-env.sh
+ADD spark-defaults.conf $SPARK_HOME/conf/spark-defaults.conf
+RUN chmod +x $HADOOP_HOME/etc/hadoop/yarn-env.sh && \
+    chmod +x $SPARK_HOME/conf/spark-env.sh && \
+    chmod +x  $HBASE_HOME/conf/hbase-env.sh
+# *** hive ***
+ADD apache-hive-2.3.4-bin.tar.gz / 
+ENV HIVE_HOME /opt/hive
+RUN mv apache-hive-2.3.4-bin $HIVE_HOME
+ADD hive-site.xml  $HIVE_HOME/conf
+ADD hive-env.sh $HIVE_HOME/conf
+RUN chmod +x  $HIVE_HOME/conf/hive-env.sh
+RUN apt-get install libmysql-java && \
+    ln -s /usr/share/java/mysql-connector-java.jar /opt/hive/lib/libmysql-java.jar
+# *** for scala applications dev ***
+#RUN apt-get remove scala-library scala
+#RUN wget www.scala-lang.org/files/archive/scala-2.11.12.deb
+ADD scala-2.11.12.deb /
+RUN dpkg -i scala-2.11.12.deb
+RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list && \
+    apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 2EE0EA64E40A89B84B2DF73499E82A75642AC823 && \
+    apt-get update && \ 
+    apt-get install -y sbt && \
+    apt-get install -y netcat
+# *** set PATH in .bashrc for all installed packages ***
+ADD start-hadoop.sh start-hadoop.sh
+RUN echo "PATH=$PATH:$HADOOP_HOME/bin:$HBASE_HOME/bin:$SPARK_HOME/bin:$HIVE_HOME/bin" >> ~/.bashrc && \
+    echo "export LD_LIBRARY_PATH=$HADOOP_HOME/lib/native/:$LD_LIBRARY_PATH" >> ~/.bashrc 
+ENTRYPOINT ["bash","/start-hadoop.sh"]
