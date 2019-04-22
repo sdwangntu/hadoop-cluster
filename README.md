@@ -8,16 +8,16 @@ Please download required packages before docker building:   <br />
 * hbase-1.4.9-bin.tar.gz  
 
 
-## Build image:<br />
+## Build image:
 docker build -t hadoop3hbase-spark-hive .  <br />
 
 ## Pull image from dockerhub
 docker pull sdwangntu/hive-metastore-db   <br />
 docker pull sdwangntu/sdwangntu/hive-metastore-db   <br />
 
-## Launch cluster:  <br />
-docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db
-docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  <br />
-docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  <br />
+## Launch cluster: 
+* docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db
+* docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  
+* docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive 
  
 
