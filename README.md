@@ -13,7 +13,7 @@ docker build -t hadoop3hbase-spark-hive .  <br />
 
 ## Pull image from dockerhub
 docker pull sdwangntu/hive-metastore-db   <br />
-docker pull sdwangntu/sdwangntu/hive-metastore-db   <br />
+docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
 
 ## Launch cluster: 
 * docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db
