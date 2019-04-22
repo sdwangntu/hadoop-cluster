@@ -1,11 +1,23 @@
 # hadoop-cluster
-Hadoop 3 and Hbase <br />
-Please download required packages: hadoop-3.1.2.tar.gz  hbase-1.4.9-bin.tar.gz   hue-4.3.0.tgz <br />
+Hadoop 3, Hbase, Spark and Hive <br />
+Please download required packages before docker building:   <br />
+* spark-2.4.1-bin-hadoop2.7.tgz
+* hue-4.3.0.tgz  
+* apache-hive-2.3.4-bin.tar.gz   
+* hadoop-3.1.2.tar.gz     
+* hbase-1.4.9-bin.tar.gz  
 
-Build image:<br />
-docker build -t hadoop3hbase .  <br />
 
-Launch cluster:  <br />
-docker run --hostname=hadoop-master -p 8088:8088 -p 9870:9870 -p 9864:9864 -p 19888:19888   -p 8042:8042 -p 8888:8888 --name hadoop-master --network  my-attachable-network -d hadoop3hbase   <br />
-docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d hadoop3hbase  <br />
+## Build image:<br />
+docker build -t hadoop3hbase-spark-hive .  <br />
+
+## Pull image from dockerhub
+docker pull sdwangntu/hive-metastore-db   <br />
+docker pull sdwangntu/sdwangntu/hive-metastore-db   <br />
+
+## Launch cluster:  <br />
+docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db
+docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  <br />
+docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  <br />
+ 
 
