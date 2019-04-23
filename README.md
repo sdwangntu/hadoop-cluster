@@ -23,5 +23,5 @@ docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
 Note the container exection order.
  
 ## Launch a development container
-*  docker run -d -v `pwd`:/work --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network  hadoop3hbase-spark-hive
-Note that bind current working directory (`pwd`) as a persistent work space to keep your developing projects.
+*  docker run -d -v $(pwd):/work --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network  hadoop3hbase-spark-hive
+Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.
