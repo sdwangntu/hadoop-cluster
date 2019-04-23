@@ -17,11 +17,12 @@ docker pull sdwangntu/hive-metastore-db   <br />
 docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
 
 ## Launch cluster: 
-* docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db
-* docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive  
-* docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive 
-Note the container exection order.
+* docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db  
+* docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive    
+* docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
+Note the container exection order.   
  
 ## Launch a development container
-*  docker run -d -v $(pwd):/work --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network  hadoop3hbase-spark-hive
-Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.
+*  docker run -d -v $(pwd):/work --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network  hadoop3hbase-spark-hive  
+Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.  
+
