@@ -9,7 +9,8 @@ Please download required packages before docker building:   <br />
 
 
 ## Build image:
-docker build -t hadoop3hbase-spark-hive .  <br />
+* docker build -t hadoop3hbase-spark-hive .     
+
 Note the hive-metastore-db image can be built at the directory Dockerfile-mysql, where mysql is used as the hive metastore DB.
 
 ## Pull image from dockerhub
@@ -20,9 +21,11 @@ docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
 * docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db  
 * docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive    
 * docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
+
 Note the container exection order.   
  
 ## Launch a development container
 *  docker run -d -v $(pwd):/work --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network  hadoop3hbase-spark-hive  
+
 Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.  
 
