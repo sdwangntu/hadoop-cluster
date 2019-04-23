@@ -14,8 +14,8 @@ Please download required packages before docker building:   <br />
 Note the hive-metastore-db image can be built at the directory Dockerfile-mysql, where mysql is used as the hive metastore DB.
 
 ## Pull image from dockerhub
-docker pull sdwangntu/hive-metastore-db   <br />
-docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
+* docker pull sdwangntu/hive-metastore-db   <br />
+* docker pull sdwangntu/hadoop3hbase-spark-hive   <br />
 
 ## Launch cluster: 
 * docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db  
