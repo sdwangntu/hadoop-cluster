@@ -38,5 +38,5 @@ Note that bind current working directory, $(pwd), as a persistent work space to 
 ## Check the cluster node list in the development container "hadoop-dev"
 * yarn node -list
 
-## test a mapreduce program such as pi in the development container "hadoop-dev" -- test parameter 10000 -> 1000000
+## Test a mapreduce program such as pi in the development container "hadoop-dev" -- test parameter 10000 -> 1000000
 * yarn jar /opt/hadoop/share/hadoop/mapreduce/hadoop-mapreduce-examples-3.1.2.jar pi 4 10000
