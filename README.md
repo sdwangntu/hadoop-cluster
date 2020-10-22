@@ -20,14 +20,14 @@ Note the hive-metastore-db image can be built at the directory Dockerfile-mysql,
 ## Create an attachable overlay network called for example "my-attachable-network"
 * docker network create -d overlay --attachable my-attachable-network
 
-## Launch cluster: (note the "hadoop-master" hostname is requred, the "hadoop-worker" hostname can be renamed to others)
+## Launch cluster: (note the "hadoop-master" hostname is required as it is, the "hadoop-worker" hostname can be renamed to others)
 * docker run --hostname=mysql --name mysql --network  my-attachable-network -d sdwangntu/hive-metastore-db  
 * docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive    
 * docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
 
 Note the container exection order.   
  
-## Launch a development container (this is a hadoop development container and is used for development and job submission) the "hadoop-dev" hostname  is requiered
+## Launch a development container (this is a hadoop development container and is used for development and job submission) the "hadoop-dev" hostname  is required as it is
 * docker run --hostname=hadoop-dev --name hadoop-dev -v $(pwd):/home --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
 
 Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.  
