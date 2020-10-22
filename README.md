@@ -32,3 +32,5 @@ Note the container exection order.
 
 Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.  
 
+## Check the cluster status
+* hdfs dfsadmin -report
