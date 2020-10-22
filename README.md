@@ -25,7 +25,7 @@ Note the hive-metastore-db image can be built at the directory Dockerfile-mysql,
 * docker run --hostname=hadoop-master --name hadoop-master --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive    
 * docker run --hostname=hadoop-worker --name hadoop-worker --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
 
-Note the container exection order.   
+Note the container exection order. And also check the startup routine "start-hadoop.sh" to see the roles played by each container.
  
 ## Launch a development container (this is a hadoop development container and is used for development and job submission) the "hadoop-dev" hostname  is required as it is
 * docker run --hostname=hadoop-dev --name hadoop-dev -v $(pwd):/home --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
