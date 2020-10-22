@@ -28,7 +28,7 @@ Note the hive-metastore-db image can be built at the directory Dockerfile-mysql,
 Note the container exection order.   
  
 ## Launch a development container
-* docker run --hostname=hadoop-dev --name hadoop-dev --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
+* docker run --hostname=hadoop-dev --name hadoop-dev -v $(pwd):/home --network  my-attachable-network -d sdwangntu/hadoop3hbase-spark-hive   
 
 Note that bind current working directory, $(pwd), as a persistent work space to keep your developing projects.  
 
