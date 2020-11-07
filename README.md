@@ -4,7 +4,7 @@ Please download required packages before docker building:   <br />
 * hadoop-3.1.2.tar.gz  
 * hbase-1.4.9-bin.tar.gz  
 * spark-2.4.1-bin-hadoop2.7.tgz
-* hue-4.3.0.tgz  
+* hue-4.3.0.tgz  (optional, if not used, comment out corresponding lines in the Dockerfile)
 * apache-hive-2.3.4-bin.tar.gz  
 
 
